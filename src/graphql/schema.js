@@ -12,6 +12,19 @@ const TelemetryType = new GraphQLObjectType({
   }
 });
 
+const AnomalyType = new GraphQLObjectType({
+  name: 'Anomaly',
+  fields: {
+    id: { type: GraphQLInt },
+    telemetry_id: { type: GraphQLInt },
+    aircraft_id: { type: GraphQLString },
+    metric_type: { type: GraphQLString },
+    value: { type: GraphQLFloat },
+    reason: { type: GraphQLString },
+    timestamp: { type: GraphQLString },
+  }
+});
+
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
   fields: {
@@ -19,6 +32,13 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(TelemetryType),
       resolve: async () => {
         const res = await pool.query('SELECT * FROM telemetry ORDER BY timestamp DESC LIMIT 10');
+        return res.rows;
+      }
+    },
+    anomalies: {
+      type: new GraphQLList(AnomalyType),
+      resolve: async () => {
+        const res = await pool.query('SELECT * FROM anomalies ORDER BY timestamp DESC LIMIT 10');
         return res.rows;
       }
     }
