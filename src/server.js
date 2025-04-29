@@ -15,4 +15,4 @@ pool.query('SELECT NOW()')
 
 setInterval(() => {
   generateTelemetry();
-}, 3000);
+}, 5000); 

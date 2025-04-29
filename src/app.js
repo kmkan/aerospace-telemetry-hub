@@ -1,10 +1,16 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const schema = require('./graphql/schema');
+const adminRoutes = require('./routes/admin');
+const authenticateToken = require('./middleware/auth');
 
 const app = express();
 
-app.use('/graphql', graphqlHTTP({
+app.use(express.json());
+
+app.use('/admin', adminRoutes);
+
+app.use('/graphql', authenticateToken, graphqlHTTP({
   schema,
   graphiql: true,
 }));
