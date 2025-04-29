@@ -13,6 +13,6 @@ pool.query('SELECT NOW()')
   .then(res => console.log('DB Connected:', res.rows[0]))
   .catch(err => console.error('DB Error', err));
 
-// setInterval(() => {
-//   generateTelemetry();
-// }, 3000);
+setInterval(() => {
+  generateTelemetry();
+}, 3000);
