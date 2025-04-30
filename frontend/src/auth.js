@@ -1,5 +1,5 @@
 export async function loginAdmin(username, password) {
-    const res = await fetch('http://localhost:5000/admin/login', {
+    const res = await fetch('http://localhost:4000/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password })

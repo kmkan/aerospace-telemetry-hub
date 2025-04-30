@@ -1,15 +1,27 @@
+version: '3.8'
+
 services:
-  app:
-    build: .
+  backend:
+    build: ./backend
     ports:
-      - '5000:5000'
+      - "4000:4000"
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/aerospace
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=password
+      - JWT_SECRET=supersecretkey
     depends_on:
       - db
     volumes:
-      - .:/app
+      - ./backend:/app
     command: npm run dev
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
 
   db:
     image: postgres:15
@@ -22,6 +34,7 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   pgdata:
