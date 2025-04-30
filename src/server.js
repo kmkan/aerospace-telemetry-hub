@@ -20,5 +20,5 @@ pool.query('SELECT NOW()')
   
     setInterval(() => {
       generateTelemetry();
-    }, 2000);
+    }, 5000);
   })(); 
