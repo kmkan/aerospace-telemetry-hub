@@ -53,10 +53,15 @@ const RootQuery = new GraphQLObjectType({
     anomalies: {
       type: new GraphQLList(AnomalyType),
       resolve: async () => {
-        const res = await pool.query('SELECT * FROM anomalies ORDER BY timestamp DESC LIMIT 10');
+        const res = await pool.query(`
+          SELECT aircraft_id, metric_type, value, reason, to_char(timestamp, 'YYYY-MM-DD HH24:MI:SS') as timestamp
+          FROM anomalies
+          ORDER BY timestamp DESC
+          LIMIT 5
+        `);
         return res.rows;
       }
-    },
+    },    
     aircraft: {
       type: new GraphQLList(AircraftType),
       resolve: async () => {
