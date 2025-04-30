@@ -1,6 +1,21 @@
 const { GraphQLSchema, GraphQLObjectType, GraphQLString, GraphQLFloat, GraphQLList, GraphQLInt } = require('graphql');
 const pool = require('../config/db');
 
+const AircraftType = new GraphQLObjectType({
+  name: 'Aircraft',
+  fields: {
+    id: { type: GraphQLInt },
+    name: { type: GraphQLString },
+    model: { type: GraphQLString },
+    max_altitude: { type: GraphQLFloat },
+    max_speed: { type: GraphQLFloat },
+    min_temp: { type: GraphQLFloat },
+    max_temp: { type: GraphQLFloat },
+    min_pressure: { type: GraphQLFloat },
+    max_pressure: { type: GraphQLFloat },
+  }
+});
+
 const TelemetryType = new GraphQLObjectType({
   name: 'Telemetry',
   fields: {
@@ -41,7 +56,14 @@ const RootQuery = new GraphQLObjectType({
         const res = await pool.query('SELECT * FROM anomalies ORDER BY timestamp DESC LIMIT 10');
         return res.rows;
       }
-    }
+    },
+    aircraft: {
+      type: new GraphQLList(AircraftType),
+      resolve: async () => {
+        const res = await pool.query('SELECT * FROM aircraft ORDER BY name');
+        return res.rows;
+      }
+    },    
   }
 });
 
