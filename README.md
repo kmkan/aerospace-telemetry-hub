@@ -1,4 +1,4 @@
-# ✈️ Aerospace Telemetry Hub
+# Aerospace Telemetry Hub
 
 A real-time aerospace telemetry backend + dashboard system built with Docker, PostgreSQL, GraphQL, Node.js, and React. Simulates telemetry data from aircraft, detects anomalies, and visualizes everything in a secure dashboard — production-ready and AWS-deployable.
 
